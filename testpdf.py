@@ -1,23 +1,50 @@
+import string
 import PyPDF2
 import tabula
 import csv
+import pandas as pd
 
+#open pdf file and convert it to .csv, if it already exists do nothing
 try:
     f = open('pdf.csv', 'x')
     df = tabula.convert_into("librev.pdf", "pdf.csv", output_format="csv")
 except FileExistsError:
     print ('File Already Exists')
 
-# in order to print first 5 lines of Table
+result = []
+with open("pdf.csv", 'r') as csvfile:
+    csvreader = csv.reader(csvfile, delimiter=',')
+    
+    for row in csvreader:
+        result.append( row )
 
-with open('pdf.csv') as csv_file:
-    csv_reader = csv.reader(csv_file, delimiter=',')
-    line_count = 0
-    for row in csv_reader:
-        if line_count == 0:
-            print(f'Column names are {", ".join(row)}')
-            line_count += 1
+# find first item CNPJ
+cnpj_i = 0
+cnpj_j = 0
+for row in result:
+    inBreak = False # break row loop when item loop breaks
+    cnpj_j = 0
+    for item in row:
+        if item == 'CNPJ':
+            inBreak = True
+            break
+        cnpj_j+=1
+    if inBreak: 
+        break
+    cnpj_i+=1
+
+total_cnpj_item = 0
+#find how many itens has column CNPJ
+for iten in range( len(result) - cnpj_i ):
+    try:
+        if result[iten + cnpj_i][cnpj_j] == "":
+            break
         else:
-            print(f'\t{row[0]} works in the {row[1]} department, and was born in {row[2]}.')
-            line_count += 1
-    print(f'Processed {line_count} lines.')
+            total_cnpj_item += 1
+            print(result[iten + cnpj_i][cnpj_j])
+    except IndexError:
+        break
+
+print(result[cnpj_i].index("CNPJ"))
+
+total_cnpj_item -= 1 #to no include CNPJ string count
