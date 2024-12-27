@@ -1,12 +1,10 @@
-import string
-import PyPDF2
 import tabula
 import csv
 import pandas as pd
 
 #open pdf file and convert it to .csv, if it already exists do nothing
 try:
-    f = open('pdf.csv', 'x')
+    f = open('pdf.csv', 'x') #crio o arquivo csv?
     df = tabula.convert_into("librev.pdf", "pdf.csv", output_format="csv")
 except FileExistsError:
     print ('File Already Exists')
@@ -48,3 +46,5 @@ for iten in range( len(result) - cnpj_i ):
 print(result[cnpj_i].index("CNPJ"))
 
 total_cnpj_item -= 1 #to no include CNPJ string count
+
+print(df.head(15))
