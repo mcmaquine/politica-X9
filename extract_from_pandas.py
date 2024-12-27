@@ -42,6 +42,3 @@ def _shear_names( str_name ):
 
 df = read_pdf( "librev.pdf" )
 create_data_frame( df )
-
-00020101021226850014br.gov.bcb.pix2563qrcodepix.bb.com.br/pix/v2/bf8a9d58-f823-41bf-ab47-d9bfa809fe9c5204000053039865406203.065802BR5906DETRAN6006MANAUS62070503***6304B692
-00020101021226850014br.gov.bcb.pix2563qrcodepix.bb.com.br/pix/v2/72924483-c8a4-4a18-a5e9-7d0da86696f25204000053039865406210.325802BR5904IMMU6006MANAUS62070503***63047059
