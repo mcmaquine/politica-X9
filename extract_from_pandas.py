@@ -27,6 +27,10 @@ def create_data_frame( primary_df ):
     new_frame   =   new_frame.iloc[:, :-2]
     new_frame.rename(columns={_firstcol:'CNPJ', 'Unnamed: 0':'Data Documento', 'Unnamed: 1':'Fornecedor', 'Unnamed: 2':'Item de Despesa', 'Unnamed: 3':'Valor (R$)'}, inplace=True)
 
+    # Split 'Data Documento' and assign the second part to 'Nro.Documento'
+    new_frame['Nro.Documento'] = new_frame['Data Documento'].apply(lambda x: x.split()[1] if len(x.split()) > 1 else None)
+    new_frame['Data Documento'] = new_frame['Data Documento'].apply(lambda x: x.split()[0])
+
     print( new_frame.head())
 
 
@@ -39,6 +43,3 @@ def _shear_names( str_name ):
     names = names.split(" ", 1)
     
     return names
-
-df = read_pdf( "librev.pdf" )
-create_data_frame( df )
