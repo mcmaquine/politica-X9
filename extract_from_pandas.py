@@ -4,8 +4,8 @@ import tabula
 def read_pdf( file ):
 
     try:
-        dfs = tabula.read_pdf( file, pages=1) # entrega um Dataframe
-        return dfs[0]
+        dfs = tabula.read_pdf( file, pages='all', pandas_options={'dtype':'str'}) # entrega um Dataframe
+        return dfs
     except Exception:
         print("Arquivo não existe")
         return None
@@ -43,3 +43,7 @@ def _shear_names( str_name ):
     names = names.split(" ", 1)
     
     return names
+
+df = read_pdf("relatorio_ceap.pdf")
+for i in range(len(df)):
+    print( df[i].head() )
